@@ -1,0 +1,39 @@
+version: '3'
+services:
+  sample_base_netns:
+    image: google/pause
+    
+  sample_cloudlens_sidecar:
+    image: ixiacom/cloudlens-agent
+    restart: on-failure
+    network_mode: 'service:sample_base_netns'
+    cap_add:
+      - SYS_RAWIO
+      - SYS_ADMIN
+      - NET_ADMIN
+    privileged: true
+    command: --accept_eula yes --apikey "${CLOUDLENS_PROJECT_API_KEY}" --custom_tags workload=sample_snort_sensor
+
+  sample_snort:
+    build: 
+      context: ./snort
+      dockerfile: Dockerfile
+    image: sample_snort
+    network_mode: 'service:sample_base_netns'
+    restart: on-failure
+    volumes:
+      - "snort_logs:/var/log/snort"
+    command: -i cloudlens0
+
+  sample_filebeat_sidecar:
+    build:
+      context: ./filebeat
+      dockerfile: Dockerfile
+    image: sample_filebeat_sidecar
+    restart: on-failure
+    volumes:
+      - "snort_logs:/output"
+    command: "${ELK_HOSTNAME_OR_IP}"
+
+volumes:
+  snort_logs:

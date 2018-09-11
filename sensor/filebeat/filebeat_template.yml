@@ -1,0 +1,11 @@
+output:
+  logstash:
+    hosts:
+      - ${host}:5044
+
+
+filebeat:
+  prospectors:
+    - document_type: log
+      paths:
+        - /output/*.csv

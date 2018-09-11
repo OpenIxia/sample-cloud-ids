@@ -1,0 +1,19 @@
+version: '3'
+services:
+  sample_app:
+    build: .
+    image: sample_app
+    ports:
+     - "80:6200"
+
+  sample_app_cloudlens_sidecar:
+    image: ixiacom/cloudlens-agent 
+    network_mode: 'service:sample_app'
+    cap_add:
+      - SYS_RAWIO
+      - SYS_ADMIN
+      - NET_ADMIN
+    privileged: true
+    restart: on-failure
+    command: --accept_eula yes --apikey "${CLOUDLENS_PROJECT_API_KEY}" --custom_tags workload=sample_vulnerable_app
+

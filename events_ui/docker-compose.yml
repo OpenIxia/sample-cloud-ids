@@ -1,0 +1,17 @@
+version: '3'
+services:
+  sample_elk:
+    build: .
+    image: sample_elk
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
+    environment:
+      - ES_CONNECT_RETRY=60
+      - KIBANA_CONNECT_RETRY=60
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144 
+

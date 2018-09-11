@@ -1,0 +1,25 @@
+--- /etc/snort/snort.conf	2015-06-30 06:52:26.000000000 +0000
++++ /root/snort.conf	2018-05-25 17:33:46.749955480 +0000
+@@ -530,20 +530,8 @@
+ # For more information, see Snort Manual, Configuring Snort - Output Modules
+ ###################################################
+ 
+-# unified2 
+-# Recommended for most installs
+-# output unified2: filename merged.log, limit 128, nostamp, mpls_event_types, vlan_event_types
+-output unified2: filename snort.log, limit 128, nostamp, mpls_event_types, vlan_event_types
+-
+-# Additional configuration for specific types of installs
+-# output alert_unified2: filename snort.alert, limit 128, nostamp
+-# output log_unified2: filename snort.log, limit 128, nostamp 
+-
+-# syslog
+-# output alert_syslog: LOG_AUTH LOG_ALERT
+-
+-# pcap
+-# output log_tcpdump: tcpdump.log
++# csv
++output alert_csv: alert.csv default
+ 
+ # metadata reference data.  do not modify these lines
+ include classification.config

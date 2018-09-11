@@ -6,8 +6,6 @@ This is a small vulnerable application based off https://github.com/stamparm/DSV
 We also run CloudLens agent as a sidecar container to tap packets hitting the app.  
 
 ## Requirements
-  - Python 2.6/2.7  
-  - Python lxml  
   - docker >= 17.12.0-ce  
   - docker-compose >= 1.22.0  
 

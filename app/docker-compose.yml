@@ -1,14 +1,19 @@
 version: '3'
 services:
-  sample_app:
-    build: .
-    image: sample_app
+  sample_base_netns:
+    image: google/pause
     ports:
      - "80:6200"
 
+  sample_app:
+    build: .
+    image: sample_app
+    restart: on-failure
+    network_mode: 'service:sample_base_netns'
+
   sample_app_cloudlens_sidecar:
     image: ixiacom/cloudlens-agent 
-    network_mode: 'service:sample_app'
+    network_mode: 'service:sample_base_netns'
     cap_add:
       - SYS_RAWIO
       - SYS_ADMIN

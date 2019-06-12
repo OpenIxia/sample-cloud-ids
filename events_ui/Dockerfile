@@ -1,4 +1,4 @@
-FROM sebp/elk
+FROM sebp/elk:640
 
 LABEL Author="Ixia Cloudlens Engineering <cloudlens@keysight.com>" \
       Description="GameDay ELK" \
